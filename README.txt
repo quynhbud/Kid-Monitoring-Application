@@ -7,4 +7,6 @@ Danh sách yêu cầu đề tài:
 3. Chặn và giới hạn các ứng dụng trên CHplay hoặc appStore
 4. Chặn gỡ ứng dụng giám sát 
 
-Hướng dẫn sử dụng
+Hướng dẫn sử dụng:
+
+
