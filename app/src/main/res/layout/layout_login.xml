@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextUsernameLogin"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
@@ -32,10 +32,10 @@
         android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/editTextPasswordLogin"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextUsername"
+        android:layout_below="@+id/editTextUsernameLogin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_action_password"
@@ -48,7 +48,7 @@
         android:id="@+id/textForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPassword"
+        android:layout_below="@+id/editTextPasswordLogin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Quên mật khẩu?" />

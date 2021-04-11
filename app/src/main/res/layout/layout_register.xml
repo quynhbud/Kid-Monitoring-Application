@@ -90,7 +90,7 @@
         </RadioButton>
     </RadioGroup>
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/editTextPasswordRegister"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/groupGender"
@@ -106,7 +106,7 @@
         android:id="@+id/editTextPasswordAgain"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPassword"
+        android:layout_below="@+id/editTextPasswordRegister"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_action_password"
