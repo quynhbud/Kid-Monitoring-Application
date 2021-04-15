@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.login);
         accounts=new ArrayList<>();
         GetData(urlGetData);
-        usn=(EditText)findViewById(R.id.editTextUsernameLogin);
-        psw=(EditText)findViewById(R.id.editTextPasswordLogin);
-        cvLogin=(CardView)findViewById(R.id.cardViewLogin);
-        tvRegister=(TextView)findViewById(R.id.textViewRegister);
+        usn = (EditText)findViewById(R.id.editTextUsernameLogin);
+        psw = (EditText)findViewById(R.id.editTextPasswordLogin);
+        cvLogin = (CardView)findViewById(R.id.cardViewLogin);
+        tvRegister = (TextView)findViewById(R.id.textViewRegister);
 
         //Đăng nhập
         cvLogin.setOnClickListener(new View.OnClickListener() {

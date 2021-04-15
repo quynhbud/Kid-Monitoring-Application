@@ -39,7 +39,7 @@
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_action_calendar"
         android:ems="10"
-        android:hint="Ngày sinh"
+        android:hint="Ngày sinh: yyyy-MM-dd"
         android:inputType="date"
         android:textColor="#fff"
         android:textSize="16dp" />
