@@ -27,10 +27,9 @@
         android:drawableLeft="@drawable/ic_action_email"
         android:ems="10"
         android:hint="Email"
-<<<<<<< HEAD:app/src/main/res/layout/layout_login.xml
-=======
+
         android:shadowRadius="25"
->>>>>>> ec1619acb8679fce166c136c335d6c6b8cf909e2:KidMonitoringApp/app/src/main/res/layout/login.xml
+
         android:inputType="textPersonName"
         android:textColor="#fff"
         android:textSize="16sp" />
@@ -48,7 +47,6 @@
         android:inputType="textPassword"
         android:textColor="#fff"
         android:textSize="16sp" />
-<<<<<<< HEAD:app/src/main/res/layout/layout_login.xml
     <TextView
         android:id="@+id/textForgotPassword"
         android:layout_width="wrap_content"
@@ -56,29 +54,24 @@
         android:layout_below="@+id/editTextPasswordLogin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:textColor="#fff"
         android:text="Quên mật khẩu?" />
-=======
 
->>>>>>> ec1619acb8679fce166c136c335d6c6b8cf909e2:KidMonitoringApp/app/src/main/res/layout/login.xml
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewLogin"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-<<<<<<< HEAD:app/src/main/res/layout/layout_login.xml
         android:layout_below="@+id/textForgotPassword"
-        android:layout_marginTop="30dp"
-=======
-        android:layout_below="@+id/editTextPasswordLogin"
         android:layout_marginTop="35dp"
->>>>>>> ec1619acb8679fce166c136c335d6c6b8cf909e2:KidMonitoringApp/app/src/main/res/layout/login.xml
-        app:cardBackgroundColor="#F8568D"
+
+        app:cardBackgroundColor="#FFF"
         app:cardCornerRadius="25dp">
 
         <RelativeLayout
+            android:background="@drawable/custom_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
@@ -86,7 +79,7 @@
                 android:layout_centerInParent="true"
                 android:textStyle="bold"
                 android:textSize="22sp"
-                android:textColor="#fff"
+                android:textColor="#03A9F4"
                 android:text="ĐĂNG NHẬP" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
@@ -99,6 +92,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:textStyle="bold"
+        android:textColor="#fff"
         android:text="Đăng kí tài khoản" />
 
 </RelativeLayout>

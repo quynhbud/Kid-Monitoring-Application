@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KidMonitoring"
         android:usesCleartextTraffic="true">
-
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".FormMainActivity"></activity>
         <activity android:name=".MainActivity">

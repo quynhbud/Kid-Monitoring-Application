@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:id="@+id/deltaRelative"
+        android:background="@drawable/gradient"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <ImageView
+            android:id="@+id/imageViewProfile"
+            android:layout_width="111dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_action_people"/>
+        <TextView
+            android:id="@+id/textViewInformation"
+            android:layout_below="@id/imageViewProfile"
+            android:text="THÔNG TIN CÁ NHÂN"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp">
+        </TextView>
+    </RelativeLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewProfile"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/deltaRelative"
+        android:layout_marginTop="35dp"
+
+        app:cardCornerRadius="25dp">
+
+        <RelativeLayout
+            android:background="@drawable/custom_button"
+            android:layout_width="350dp"
+            android:layout_height="350dp">
+
+            <EditText
+                android:id="@+id/editTextprofileName"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Họ và tên"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColor="#fff"
+                android:textSize="22sp" />
+            <EditText
+                android:id="@+id/editTextProfileDOB"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextprofileName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/ic_action_calendar"
+                android:ems="10"
+                android:hint="Ngày sinh: yyyy-MM-dd"
+                android:inputType="date"
+                android:textColor="#fff"
+                android:textSize="22sp" />
+            <EditText
+                android:id="@+id/editTextProfileEmail"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextProfileDOB"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/ic_action_email"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:textColor="#fff"
+                android:textSize="22sp" />
+            <TextView
+                android:id="@+id/textViewProfileGender"
+                android:layout_below="@+id/editTextProfileEmail"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="Giới tính: "
+                android:textSize="16dp"
+                android:drawableLeft="@drawable/ic_action_people"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <RadioGroup
+                android:id="@+id/groupGender"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/textViewProfileGender"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/radioMale"
+                    android:layout_width="125dp"
+                    android:layout_height="30dp"
+                    android:text="Nam"
+                    android:checked="true">
+                </RadioButton>
+                <RadioButton
+                    android:id="@+id/radioFemale"
+                    android:layout_width="125dp"
+                    android:layout_height="30dp"
+                    android:text="Nữ">
+                </RadioButton>
+            </RadioGroup>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewEditProfile"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/cardViewProfile"
+        android:layout_marginTop="25dp"
+        app:cardBackgroundColor="#F8568D"
+        app:cardCornerRadius="25dp">
+
+        <RelativeLayout
+            android:background="@drawable/custom_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewEditProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#03A9F4"
+                android:text="CHỈNH SỬA THÔNG TIN" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSaveProfile"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/cardViewEditProfile"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="#F8568D"
+        app:cardCornerRadius="25dp">
+
+        <RelativeLayout
+            android:background="@drawable/custom_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewSaveProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#03A9F4"
+                android:text="LƯU THÔNG TIN" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

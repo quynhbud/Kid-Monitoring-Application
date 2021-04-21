@@ -112,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtFullName = (EditText) findViewById(R.id.editTextFullname);
         edtDoB = (EditText) findViewById(R.id.editTextDateOfBirth);
         edtEmail = (EditText) findViewById(R.id.editTextEmail);
-        edtPassword = (EditText) findViewById(R.id.editTextPassword);
+        edtPassword = (EditText) findViewById(R.id.editTextPasswordRegister);
         edtConfirm = (EditText) findViewById(R.id.editTextPasswordAgain);
         rgGender = (RadioGroup)findViewById(R.id.groupGender);
         cvRegister = (CardView)findViewById(R.id.cardViewRegister);
