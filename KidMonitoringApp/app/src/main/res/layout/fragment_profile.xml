@@ -46,7 +46,7 @@
 
             <EditText
                 android:id="@+id/editTextprofileName"
-                android:layout_width="250dp"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:hint="Họ và tên"
                 android:layout_alignParentTop="true"
@@ -54,33 +54,32 @@
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textColor="#fff"
+                android:textColor="#000000"
                 android:textSize="22sp" />
             <EditText
                 android:id="@+id/editTextProfileDOB"
-                android:layout_width="250dp"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editTextprofileName"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/ic_action_calendar"
                 android:ems="10"
                 android:hint="Ngày sinh: yyyy-MM-dd"
                 android:inputType="date"
-                android:textColor="#fff"
+                android:textColor="#000000"
                 android:textSize="22sp" />
             <EditText
                 android:id="@+id/editTextProfileEmail"
-                android:layout_width="250dp"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editTextProfileDOB"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/ic_action_email"
                 android:ems="10"
                 android:hint="Email"
+                android:enabled="false"
                 android:inputType="textEmailAddress"
-                android:textColor="#fff"
+                android:textColor="#000000"
                 android:textSize="22sp" />
             <TextView
                 android:id="@+id/textViewProfileGender"
@@ -89,13 +88,12 @@
                 android:layout_marginTop="20dp"
                 android:text="Giới tính: "
                 android:textSize="16dp"
-                android:drawableLeft="@drawable/ic_action_people"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content">
             </TextView>
 
             <RadioGroup
-                android:id="@+id/groupGender"
+                android:id="@+id/groupProfileGender"
                 android:layout_width="250dp"
                 android:layout_height="30dp"
                 android:layout_below="@+id/textViewProfileGender"
@@ -103,17 +101,18 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/radioMale"
+                    android:id="@+id/radioProfileMale"
                     android:layout_width="125dp"
                     android:layout_height="30dp"
                     android:text="Nam"
-                    android:checked="true">
+                    android:enabled="false">
                 </RadioButton>
                 <RadioButton
-                    android:id="@+id/radioFemale"
+                    android:id="@+id/radioProfileFemale"
                     android:layout_width="125dp"
                     android:layout_height="30dp"
-                    android:text="Nữ">
+                    android:text="Nữ"
+                    android:enabled="false">
                 </RadioButton>
             </RadioGroup>
         </RelativeLayout>

@@ -12,9 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KidMonitoring"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".FormMainActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.RolesActivity"></activity>
+        <activity android:name=".view.RegisterActivity" />
+        <activity android:name=".view.FormMainActivity" />
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

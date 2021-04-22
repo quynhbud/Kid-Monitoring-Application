@@ -1,4 +1,4 @@
-package com.example.kidmonitoring;
+package com.example.kidmonitoring.model;
 
 public class Accounts {
     private String Username;
