@@ -12,17 +12,5 @@
             android:id="@+id/Logout"
             android:icon="@drawable/ic_action_people"
             android:title="Đăng xuất"></item>
-        <item
-            android:id="@+id/Help"
-            android:icon="@drawable/ic_action_people"
-            android:title="Hỗ trợ"></item>
     </group>
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/share"
-                android:icon="@drawable/ic_action_people"
-                android:title="Hỗ trợ"></item>
-        </menu>
-    </item>
 </menu>
