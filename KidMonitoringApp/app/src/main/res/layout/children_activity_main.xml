@@ -20,32 +20,50 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
         </androidx.appcompat.widget.Toolbar>
+
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="60dp"
+                android:id="@+id/imageViewKid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/kid">
 
             </ImageView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewLogin"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="150dp"
+
+                app:cardBackgroundColor="#FFF"
+                app:cardCornerRadius="25dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/custom_button">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="ĐĂNG XUẤT"
+                        android:textColor="#03A9F4"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
         </FrameLayout>
     </LinearLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-    </com.google.android.material.navigation.NavigationView>
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
