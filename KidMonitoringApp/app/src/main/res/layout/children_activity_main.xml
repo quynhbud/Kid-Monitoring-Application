@@ -37,7 +37,7 @@
             </ImageView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewLogin"
+                android:id="@+id/cardViewLogout"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="50dp"

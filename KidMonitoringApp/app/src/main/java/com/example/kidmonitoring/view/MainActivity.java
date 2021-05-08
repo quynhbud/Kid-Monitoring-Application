@@ -12,9 +12,11 @@ import androidx.cardview.widget.CardView;
 
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AccountController;
+import com.example.kidmonitoring.controller.SessionManager;
 import com.example.kidmonitoring.model.Accounts;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity  {
     CardView cvLogin;
     TextView tvRegister;
     String urlGetData="https://kid-monitoring.000webhostapp.com/getdata.php";
+    SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity  {
         accounts=new ArrayList<>();
         AccountController.GetData(urlGetData,accounts,this);
         AnhXa();
-
+        sessionManager = new SessionManager(this);
         //Đăng nhập
         cvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity  {
                 {
                     Toast.makeText(MainActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                     Email = username;
+                    sessionManager.createLoginSession(username, password);
                     startActivity(new Intent(MainActivity.this,RolesActivity.class));
                     finish();
                 }
@@ -65,6 +69,18 @@ public class MainActivity extends AppCompatActivity  {
                 finish();
             }
         });
+        sessionManager.checkLogin();
+// get user data from session
+        HashMap<String, String> user = sessionManager.getUserDetails();
+
+        // name
+        String us = user.get(SessionManager.KEY_USERNAME);
+
+        // email
+        String ps = user.get(SessionManager.KEY_PASSWORD);
+
+        usn.setText(us);
+        psw.setText(ps);
     }
     private void AnhXa()
     {

@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AccountController;
 import com.example.kidmonitoring.controller.InformationController;
+import com.example.kidmonitoring.controller.SessionManager;
 import com.example.kidmonitoring.model.Information;
 import com.google.android.material.navigation.NavigationView;
 
@@ -41,6 +43,7 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
     TextView tvUsername;
     ArrayList<Information> information;
     public static Information user;
+    SessionManager sessionManager;
     String urlGetData = "https://kid-monitoring.000webhostapp.com/getdataInfor.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
         AnhXa();
         information=new ArrayList<>();
         InformationController.GetData(urlGetData,information,this);
-
+        sessionManager = new SessionManager(this);
 
         ActionToolBar();
 
@@ -71,6 +74,18 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
                 //Intent intent = new Intent(FormMainActivity.this,ProfileActivity.class);
                 //startActivity(intent);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+
+                user=InformationController.findUser(MainActivity.Email,information);
+
+                break;
+            case R.id.Logout:
+                sessionManager.logoutUser();
+                startActivity(new Intent(FormMainActivity.this,MainActivity.class));
+                finish();
+                break;
+
+            case R.id.nav_appsManager:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AppsManagerFragment()).commit();
 
                 user=InformationController.findUser(MainActivity.Email,information);
 

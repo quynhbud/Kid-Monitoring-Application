@@ -8,22 +8,30 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.kidmonitoring.R;
+import com.example.kidmonitoring.controller.SessionManager;
 
 public class RolesActivity extends AppCompatActivity {
 
     CardView cvParent, cvKid;
-
+    SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.roles);
-
+        sessionManager = new SessionManager(this);
         AnhXa();
 
         cvParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RolesActivity.this, FormMainActivity.class));
+                finish();
+            }
+        });
+        cvKid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RolesActivity.this, FormChildrenActivity.class));
                 finish();
             }
         });

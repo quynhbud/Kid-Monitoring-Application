@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_action_people"
             android:title="Hồ sơ"></item>
         <item
+            android:id="@+id/nav_appsManager"
+            android:icon="@drawable/iconappstab"
+            android:title="Quản lý ứng dụng"></item>
+        <item
             android:id="@+id/Logout"
             android:icon="@drawable/ic_action_people"
             android:title="Đăng xuất"></item>
