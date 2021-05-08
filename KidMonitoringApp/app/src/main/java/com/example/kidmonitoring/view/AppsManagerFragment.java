@@ -1,5 +1,6 @@
 package com.example.kidmonitoring.view;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
@@ -65,6 +66,7 @@ public class AppsManagerFragment extends Fragment{
     public AppsManagerFragment() {
         // Required empty public constructor
     }
+    ProgressDialog mDialog;
     View dashboardInflatedView;
     ListView lvapp;
     ArrayList<Application> applications,apps;
@@ -111,7 +113,10 @@ public class AppsManagerFragment extends Fragment{
         // Inflate the layout for this fragment
         dashboardInflatedView = inflater.inflate(R.layout.fragment_appsmanager, container, false);
         apps = new ArrayList<Application>();
-
+        mDialog = new ProgressDialog(mContext);
+        mDialog.setMessage("Loading...");
+        mDialog.setCancelable(false);
+        mDialog.show();
         GetDataAppOfUser();
 
         lvapp = (ListView)dashboardInflatedView.findViewById(R.id.listviewapp);
@@ -160,6 +165,7 @@ public class AppsManagerFragment extends Fragment{
                         e.printStackTrace();
                     }
                 adapter.notifyDataSetChanged();
+                    mDialog.dismiss();
                 Collections.sort(apps, new Comparator<Application>() {
                     @Override
                     public int compare(Application o1, Application o2) {
