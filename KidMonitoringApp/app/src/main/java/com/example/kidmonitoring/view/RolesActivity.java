@@ -24,6 +24,7 @@ public class RolesActivity extends AppCompatActivity {
         cvParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sessionManager.createRoleSession("Parent");
                 startActivity(new Intent(RolesActivity.this, FormMainActivity.class));
                 finish();
             }
@@ -31,6 +32,7 @@ public class RolesActivity extends AppCompatActivity {
         cvKid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sessionManager.createRoleSession("Children");
                 startActivity(new Intent(RolesActivity.this, FormChildrenActivity.class));
                 finish();
             }

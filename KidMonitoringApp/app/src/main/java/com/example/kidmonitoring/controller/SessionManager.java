@@ -22,6 +22,7 @@ public class SessionManager {
     public static final String KEY_USERNAME = "usn";
     public static final String KEY_PASSWORD = "psw";
     private static final String KEY_LOGIN = "IsLoggedIn";
+    public static final String KEY_ROLE = "IsParent";
 
     @SuppressLint("WrongConstant")
     public SessionManager (Context context){
@@ -42,6 +43,11 @@ public class SessionManager {
         // commit changes
         editor.commit();
     }
+    public void createRoleSession(String Role)
+    {
+        editor.putString(KEY_ROLE,Role);
+        editor.commit();
+    }
     public void checkLogin() {
         // Check login status
         if (!this.isLoggedIn()) {
@@ -59,6 +65,15 @@ public class SessionManager {
         // return user
         return user;
     }
+    public HashMap<String, String> getRoles(){
+        HashMap<String, String> role = new HashMap<String, String>();
+        // role
+        role.put(KEY_ROLE, preferences.getString(KEY_ROLE, null));
+
+        // return role
+        return role;
+    }
+
     public void logoutUser(){
         // Clearing all data from Shared Preferences
         editor.clear();

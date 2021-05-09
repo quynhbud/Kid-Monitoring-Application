@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
         sessionManager.checkLogin();
-// get user data from session
+        // get user data from session
         HashMap<String, String> user = sessionManager.getUserDetails();
 
         // name
@@ -81,6 +81,20 @@ public class MainActivity extends AppCompatActivity  {
 
         usn.setText(us);
         psw.setText(ps);
+
+        HashMap<String, String> role = sessionManager.getRoles();
+        String ROLE = role.get(SessionManager.KEY_ROLE);
+       // Toast.makeText(this, "Chưa đăng nhập", Toast.LENGTH_SHORT).show();
+        if(ROLE != null && ROLE.trim().equals("Parent"))
+        {
+            startActivity(new Intent(MainActivity.this,FormMainActivity.class));
+            finish();
+        }
+        else if(ROLE != null && ROLE.trim().equals("Children"))
+        {
+            startActivity(new Intent(MainActivity.this, FormChildrenActivity.class));
+            finish();
+        }
     }
     private void AnhXa()
     {
