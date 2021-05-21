@@ -13,6 +13,11 @@
             android:icon="@drawable/iconappstab"
             android:title="Quản lý ứng dụng"></item>
         <item
+            android:id="@+id/nav_gps"
+            android:icon="@drawable/iconlocation1"
+            android:title="Định vị"
+            ></item>
+        <item
             android:id="@+id/Logout"
             android:icon="@drawable/ic_action_people"
             android:title="Đăng xuất"></item>

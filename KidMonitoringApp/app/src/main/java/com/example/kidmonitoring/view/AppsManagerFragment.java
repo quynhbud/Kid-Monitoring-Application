@@ -89,8 +89,8 @@ public class AppsManagerFragment extends Fragment{
      * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static AppsManagerFragment newInstance(String param1, String param2) {
+        AppsManagerFragment fragment = new AppsManagerFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

@@ -24,8 +24,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AccountController;
+import com.example.kidmonitoring.controller.GPSController;
 import com.example.kidmonitoring.controller.InformationController;
 import com.example.kidmonitoring.controller.SessionManager;
+import com.example.kidmonitoring.model.GPS;
 import com.example.kidmonitoring.model.Information;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FormMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,8 +46,15 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
     TextView tvUsername;
     ArrayList<Information> information;
     public static Information user;
+    public static GPS gps;
     SessionManager sessionManager;
     String urlGetData = "https://kid-monitoring.000webhostapp.com/getdataInfor.php";
+    ArrayList<GPS> lstGPS= new ArrayList<>();
+    String us;
+
+    String urlGetDataGPS="https://kid-monitoring.000webhostapp.com/getdataGPS.php";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +63,14 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
         information=new ArrayList<>();
         InformationController.GetData(urlGetData,information,this);
         sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
 
+        GPSController.GetData(urlGetDataGPS,lstGPS,this);
+        // get user data from session
+        HashMap<String, String> user = sessionManager.getUserDetails();
+
+        // name
+        us = user.get(SessionManager.KEY_USERNAME);
         ActionToolBar();
 
 
@@ -75,7 +92,14 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
                 //startActivity(intent);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
 
-                user=InformationController.findUser(MainActivity.Email,information);
+                user=InformationController.findUser(us.trim(),information);
+
+                break;
+            case R.id.nav_gps:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GPSFragment()).commit();
+
+                gps=GPSController.findUser(us.trim(),lstGPS);
+                user=InformationController.findUser(us.trim(),information);
 
                 break;
             case R.id.Logout:
@@ -87,7 +111,7 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
             case R.id.nav_appsManager:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AppsManagerFragment()).commit();
 
-                user=InformationController.findUser(MainActivity.Email,information);
+                user=InformationController.findUser(us.trim(),information);
 
                 break;
         }
@@ -103,7 +127,7 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
                 drawer.openDrawer(GravityCompat.START);
-                tvUsername.setText(MainActivity.Email);
+                tvUsername.setText(us.trim());
             }
         });
     }
@@ -115,5 +139,6 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
         View headerView = navigationView.getHeaderView(0);
         tvUsername = (TextView) headerView.findViewById(R.id.textViewUsername);
     }
+
 
 }
