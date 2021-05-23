@@ -32,6 +32,9 @@
     - Bộ lọc web
     - Tìm kiếm an toàn (lọc các kết quả tìm kiếm phù hợp để hiển thị)
     - Theo dõi các trang web đã truy cập
+6. Định vị
+    - Hiển thị vị trí hiện tại của trẻ và phụ huynh
+    - Xem đường đi từ vị trí phụ huynh đế vị trí trẻ em
 
 ## Hướng dẫn sử dụng:
 
