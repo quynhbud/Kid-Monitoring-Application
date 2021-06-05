@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.ContactsContract;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -87,6 +88,7 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
 
     }
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -116,6 +118,11 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
 
                 user=InformationController.findUser(us.trim(),information);
 
+                break;
+            case R.id.nav_pattern:
+                Intent intent = new Intent(this, LockScreenPattern.class);
+                this.startActivity(intent);
+                LockScreenPattern.isSetPassword=true;
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

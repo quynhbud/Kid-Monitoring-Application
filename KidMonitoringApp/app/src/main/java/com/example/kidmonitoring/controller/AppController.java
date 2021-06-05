@@ -72,6 +72,7 @@ public class AppController {
                 params.put("TenUngDung",application.getmName());
                 params.put("MoTa",application.getmPackage());
                 params.put("Icon",imageBase64);
+                params.put("isBlocked","0");
                 return params;
             }
         };

@@ -1,5 +1,7 @@
 package com.example.kidmonitoring.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -10,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.util.Base64;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AppController;
+import com.example.kidmonitoring.controller.CurrentRunningApp;
 import com.example.kidmonitoring.controller.GPSController;
 import com.example.kidmonitoring.controller.GPSLocator;
 import com.example.kidmonitoring.controller.GPSService;
@@ -58,12 +62,12 @@ import java.util.Locale;
 import java.util.Map;
 
 public class FormChildrenActivity extends AppCompatActivity{
-
+    String urlGetData="https://kid-monitoring.000webhostapp.com/getdataApps.php";
     String urlInsertData="https://kid-monitoring.000webhostapp.com/insertDataApps.php";
     String urlDeleteData="https://kid-monitoring.000webhostapp.com/deleteDataApps.php";
-
-    ArrayList<Application> applications;
-    CardView cvLogout;
+    public static ArrayList<String> packages = new ArrayList<>();
+    ArrayList<Application> applications,apps;
+    CardView cvLogout,cvAccess;
     SessionManager sessionManager;
     double latitude,longitude;
     String myAddress = "";
@@ -77,6 +81,7 @@ public class FormChildrenActivity extends AppCompatActivity{
         AnhXa();
         sessionManager = new SessionManager(this);
         applications = new ArrayList<>();
+        apps=new ArrayList<>();
         applications = getInstalledAppList();
         sessionManager.checkLogin();
         // get user data from session
@@ -84,14 +89,16 @@ public class FormChildrenActivity extends AppCompatActivity{
 
         // name
         us = user.get(SessionManager.KEY_USERNAME);
-        //AppController.Delete(urlDeleteData,us,this);
-
+//        AppController.Delete(urlDeleteData,us,this);
+//
 //        for(int i=0; i<applications.size();i++)
 //        {
 //            AppController.Insert(urlInsertData,applications.get(i),us,this);
 //            if(i==applications.size()-1)
 //                Toast.makeText(FormChildrenActivity.this, "Done", Toast.LENGTH_SHORT).show();
 //        }
+        GetDataAppOfUser();
+
 
         GPSLocator gpsLocator = new GPSLocator(getApplicationContext());
         Location location = gpsLocator.GetLocation();
@@ -114,23 +121,102 @@ public class FormChildrenActivity extends AppCompatActivity{
         }
         //GPSController.Delete(urlDeleteDataGPS,us,this);
         //GPSController.InsertGPS(urlInsertDataGPS,new GPS(us,myAddress,latitude,longitude),this);
-        Intent myIntent = new Intent(this, GPSService.class);
-        this.startService(myIntent);
+//        Intent myIntent = new Intent(this, GPSService.class);
+//        this.startService(myIntent);
         cvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
                 sessionManager.logoutUser();
                 startActivity(new Intent(FormChildrenActivity.this,MainActivity.class));
-                FormChildrenActivity.this.stopService(myIntent);
+                //FormChildrenActivity.this.stopService(myIntent);
                 finish();
             }
         });
-    }
+        cvAccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0;i<apps.size();i++) {
+                    if(apps.get(i).isChecked()==true)
+                    {
+                        packages.add(apps.get(i).getmPackage());
+                    }
+                }
+                alertDi("Yêu cầu bật trợ năng", "Yêu cầu quyền quản lý cho ứng dụng", Settings.ACTION_ACCESSIBILITY_SETTINGS);
 
+            }
+        });
+    }
+    private void GetDataAppOfUser()
+    {
+        GetData(urlGetData);
+        for(int i=0;i<apps.size();i++)
+        {
+            if(apps.get(i).getmEmail().trim().equals(us))
+            {
+                continue;
+            }
+            else {
+                apps.remove(i);
+                i--;
+            }
+        }
+    }
     private void AnhXa() {
         cvLogout = (CardView)findViewById(R.id.cardViewLogout);
+        cvAccess = (CardView)findViewById(R.id.cardViewAccessService);
     }
+    private void GetData(String url)
+    {
+        RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for(int i = 0; i<response.length(); i++)
+                    try {
+                        JSONObject object = response.getJSONObject(i);
 
+                        //Blob blob = (Blob) object.get("Icon");
+                        byte[] bytes=null;
+                        bytes= Base64.decode(object.getString("Icon"),0);
+
+                        boolean check;
+                        if(object.getString("isBlocked").equals("1"))
+                            check=true;
+                        else
+                            check=false;
+                        //Toast.makeText(mContext, object.getString("TenUngDung"), Toast.LENGTH_SHORT).show();
+                        apps.add(new Application(
+                                object.getString("Email"),
+                                object.getString("TenUngDung"),
+                                object.getString("MoTa"),
+                                bytes,
+                                check
+                        ));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                Collections.sort(apps, new Comparator<Application>() {
+                    @Override
+                    public int compare(Application o1, Application o2) {
+                        return o1.getmName().compareTo(o2.getmName());
+                    }
+                });
+                //Toast.makeText(mContext, apps.get(apps.size()-1).getmName(),Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+
+    }
     private ArrayList<Application> getInstalledAppList() {
         ArrayList<Application> listApps = new ArrayList<Application>();
         final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
@@ -150,6 +236,7 @@ public class FormChildrenActivity extends AppCompatActivity{
             app.setmName(title);
             app.setmPackage(strPackageName);
             app.setmEmail(us);
+            app.setChecked(false);
             listApps.add(app);
         }
         return listApps;
@@ -179,6 +266,25 @@ public class FormChildrenActivity extends AppCompatActivity{
     }
 
 
-
+    public void alertDi(String Title, String msg, final String action) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(msg);
+        builder.setTitle(Title);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(action);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
 }

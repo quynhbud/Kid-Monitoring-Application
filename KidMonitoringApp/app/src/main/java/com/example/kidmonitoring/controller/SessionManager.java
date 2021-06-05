@@ -14,12 +14,23 @@ public class SessionManager {
     Context context;
     SharedPreferences.Editor editor;
 
+
     private int PRE_MODE = 0;
     private static final String NAME = "DATA";
     public static final String KEY_USERNAME = "usn";
     public static final String KEY_PASSWORD = "psw";
     private static final String KEY_LOGIN = "IsLoggedIn";
     public static final String KEY_ROLE = "IsParent";
+
+    //Singleton
+    private static SessionManager instance;
+    public static SessionManager getInstance(Context context1){
+        if(instance == null){
+            instance = new SessionManager(context1);
+        }
+        return instance;
+    }
+
 
     @SuppressLint("WrongConstant")
     public SessionManager (Context context){

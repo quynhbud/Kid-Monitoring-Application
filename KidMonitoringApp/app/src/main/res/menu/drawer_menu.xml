@@ -18,6 +18,11 @@
             android:title="Định vị"
             ></item>
         <item
+            android:id="@+id/nav_pattern"
+            android:icon="@drawable/ic_baseline_lock_24"
+            android:title="Cài đặt mật khẩu"
+            ></item>
+        <item
             android:id="@+id/Logout"
             android:icon="@drawable/ic_action_people"
             android:title="Đăng xuất"></item>

@@ -1,5 +1,6 @@
 package com.example.kidmonitoring.view;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.adapter.AppAdapter;
 import com.example.kidmonitoring.controller.AppController;
 import com.example.kidmonitoring.controller.InformationController;
+import com.example.kidmonitoring.controller.SessionManager;
 import com.example.kidmonitoring.model.Application;
 
 import org.json.JSONArray;
@@ -71,8 +74,11 @@ public class AppsManagerFragment extends Fragment{
     ListView lvapp;
     ArrayList<Application> applications,apps;
     AppAdapter adapter;
+    SessionManager sessionManager;
+    String us;
     String urlGetData="https://kid-monitoring.000webhostapp.com/getdataApps.php";
     String urlInsertData="https://kid-monitoring.000webhostapp.com/insertDataApps.php";
+    String urlUpdateData="https://kid-monitoring.000webhostapp.com/updateDataApps.php";
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -113,16 +119,39 @@ public class AppsManagerFragment extends Fragment{
         // Inflate the layout for this fragment
         dashboardInflatedView = inflater.inflate(R.layout.fragment_appsmanager, container, false);
         apps = new ArrayList<Application>();
+        applications=new ArrayList<Application>();
         mDialog = new ProgressDialog(mContext);
         mDialog.setMessage("Loading...");
         mDialog.setCancelable(false);
         mDialog.show();
         GetDataAppOfUser();
+        sessionManager = new SessionManager(mContext);
+        sessionManager.checkLogin();
+        // get user data from session
+        HashMap<String, String> user = sessionManager.getUserDetails();
+
+        // name
+        us = user.get(SessionManager.KEY_USERNAME);
 
         lvapp = (ListView)dashboardInflatedView.findViewById(R.id.listviewapp);
         adapter = new AppAdapter(mContext,R.layout.dong_app,apps);
         lvapp.setAdapter(adapter);
 
+        applications=apps;
+        lvapp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (apps.get(position).isChecked() == true){
+                    apps.get(position).setChecked(false);
+                    Update(urlUpdateData,apps.get(position),"0");
+                }
+                else {
+                    apps.get(position).setChecked(true);
+                    Update(urlUpdateData,apps.get(position),"1");
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
         return dashboardInflatedView;
     }
     private void GetDataAppOfUser()
@@ -153,13 +182,19 @@ public class AppsManagerFragment extends Fragment{
                         //Blob blob = (Blob) object.get("Icon");
                         byte[] bytes=null;
                         bytes=Base64.decode(object.getString("Icon"),0);
-                        //Toast.makeText(MainActivity.this,object.getString("MoTa").toString(),Toast.LENGTH_SHORT).show();
 
+                        boolean check;
+                        if(object.getString("isBlocked").equals("1"))
+                            check=true;
+                        else
+                            check=false;
+                            //Toast.makeText(mContext, object.getString("TenUngDung"), Toast.LENGTH_SHORT).show();
                         apps.add(new Application(
                                 object.getString("Email"),
                                 object.getString("TenUngDung"),
                                 object.getString("MoTa"),
-                                bytes
+                                bytes,
+                                check
                         ));
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -182,6 +217,40 @@ public class AppsManagerFragment extends Fragment{
             }
         });
         requestQueue.add(jsonArrayRequest);
+
+    }
+    private void Update(String url, Application application,String isBlocked)
+    {
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.trim().equals("success")) {
+                    //Toast.makeText(mContext, "Sửa thông tin tài khoản thành công!!!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    //Toast.makeText(mContext, "Lỗi",Toast.LENGTH_SHORT).show();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(mContext,"Xảy ra lỗi!"+error.toString(),Toast.LENGTH_SHORT).show();
+                        //Log.d("AAA","Lỗi\n"+error.toString());
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("Email",application.getmEmail());
+                params.put("TenUngDung",application.getmName());
+                params.put("isBlocked", isBlocked);
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
 
     }
 }

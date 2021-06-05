@@ -40,6 +40,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.LockScreenPattern"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:taskAffinity="com.sonyericsson.home"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <service
+            android:name=".controller.CurrentRunningApp"
+            android:label="Kid Monitoring Application"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibilityservice" />
+        </service>
         <activity android:name=".view.FormChildrenActivity" />
 
         <service android:name=".view.FormMainActivity" />

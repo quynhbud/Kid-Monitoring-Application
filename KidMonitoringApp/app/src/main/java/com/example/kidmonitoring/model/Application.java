@@ -7,11 +7,12 @@ public class Application {
     private boolean isChecked;
 
     public Application(){}
-    public Application(String mEmail, String mName, String mPackage, byte[] mIcon) {
+    public Application(String mEmail, String mName, String mPackage, byte[] mIcon, boolean isChecked) {
         this.mEmail=mEmail;
         this.mName = mName;
         this.mPackage = mPackage;
         this.mIcon = mIcon;
+        this.isChecked = isChecked;
     }
 
 
@@ -45,5 +46,13 @@ public class Application {
 
     public void setmEmail(String mEmail) {
         this.mEmail = mEmail;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

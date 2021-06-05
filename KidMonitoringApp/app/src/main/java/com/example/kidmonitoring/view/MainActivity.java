@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity  {
         accounts=new ArrayList<>();
         AccountController.GetData(urlGetData,accounts,this);
         AnhXa();
-        sessionManager = new SessionManager(this);
+        //sessionManager = new SessionManager(this);
+        sessionManager = SessionManager.getInstance(this);
+
         //Đăng nhập
         cvLogin.setOnClickListener(new View.OnClickListener() {
             @Override

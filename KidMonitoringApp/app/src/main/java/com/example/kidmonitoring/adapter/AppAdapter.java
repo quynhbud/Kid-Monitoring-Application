@@ -44,7 +44,7 @@ public class AppAdapter extends BaseAdapter {
     }
 
     private class ViewHolder{
-        ImageView imgView;
+        ImageView imgView, imgLock;
         TextView txtTen, txtMoTa;
     }
     @Override
@@ -58,6 +58,7 @@ public class AppAdapter extends BaseAdapter {
             holder.txtTen = (TextView) convertView.findViewById(R.id.textViewTen);
             holder.txtMoTa = (TextView) convertView.findViewById(R.id.textViewMoTa);
             holder.imgView = (ImageView) convertView.findViewById(R.id.imageViewHinh);
+            holder.imgLock = (ImageView) convertView.findViewById(R.id.iv_lock) ;
             convertView.setTag(holder);
         }
         else {
@@ -69,7 +70,14 @@ public class AppAdapter extends BaseAdapter {
         holder.txtTen.setText(application.getmName());
         holder.txtMoTa.setText(application.getmPackage());
         byte[] b = application.getmIcon();
-
+        boolean check=application.isChecked();
+        if(check==true)
+        {
+            holder.imgLock.setImageResource(R.drawable.ic_baseline_lock_24);
+        }
+        else{
+            holder.imgLock.setImageResource(R.drawable.ic_baseline_lock_open_24);
+        }
         if(b!=null){
 
             Drawable image = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(b, 0, b.length));
