@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AccountController;
 import com.example.kidmonitoring.controller.AppController;
+import com.example.kidmonitoring.model.Information;
 
 import java.util.ArrayList;
 
@@ -46,16 +47,17 @@ public class RegisterActivity extends AppCompatActivity {
         cvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                infoRegister = new ArrayList<>();
-                infoRegister.add(edtEmail.getText().toString().trim());
-                infoRegister.add(edtFullName.getText().toString().trim());
-                infoRegister.add(edtDoB.getText().toString().trim());
-                infoRegister.add(gender);
-                infoRegister.add(edtPassword.getText().toString().trim());
-                infoRegister.add(edtConfirm.getText().toString().trim());
-                if(AccountController.checkEmpty(infoRegister,RegisterActivity.this)==0)
+                String email = edtEmail.getText().toString().trim();
+                String hoTen = edtFullName.getText().toString().trim();
+                String ngaySinh = edtDoB.getText().toString().trim();
+                String Gender = gender;
+                String password = edtPassword.getText().toString().trim();
+                String confirm = edtConfirm.getText().toString().trim();
+                Information information = new Information.InformationBuilder(email).HoTen(hoTen)
+                        .NgaySinh(ngaySinh).GioiTinh(Gender).build();
+                if(AccountController.checkEmpty(information,password,confirm,RegisterActivity.this)==0)
                 {
-                    AccountController.Register(urlInsert,infoRegister,RegisterActivity.this,MainActivity.class);
+                    AccountController.Register(urlInsert,information,password,RegisterActivity.this,MainActivity.class);
                 }
             }
         });

@@ -79,7 +79,7 @@ public class FormChildrenActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.children_activity_main);
         AnhXa();
-        sessionManager = new SessionManager(this);
+        sessionManager = SessionManager.getInstance(this);
         applications = new ArrayList<>();
         apps=new ArrayList<>();
         applications = getInstalledAppList();

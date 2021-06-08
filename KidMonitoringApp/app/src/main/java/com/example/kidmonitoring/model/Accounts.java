@@ -13,15 +13,25 @@ public class Accounts {
         return Username;
     }
 
-    public void setUsername(String username) {
-        Username = username;
-    }
-
     public String getPassword() {
         return Password;
     }
 
-    public void setPassword(String password) {
-        Password = password;
+    public static class AccountsBuilder{
+        private String Username;
+        private String Password;
+
+        public AccountsBuilder (String username){
+            this.Username = username;
+        }
+
+        public AccountsBuilder Password(String password){
+            this.Password = password;
+            return this;
+        }
+        public Accounts Build(){
+            Accounts accounts = new Accounts(this.Username,this.Password);
+            return accounts;
+        }
     }
 }

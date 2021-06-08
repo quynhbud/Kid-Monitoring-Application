@@ -18,7 +18,7 @@ public class RolesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.roles);
-        sessionManager = new SessionManager(this);
+        sessionManager = SessionManager.getInstance(this);
         AnhXa();
 
         cvParent.setOnClickListener(new View.OnClickListener() {

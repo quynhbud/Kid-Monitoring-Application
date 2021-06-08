@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.kidmonitoring.model.Information;
 import com.example.kidmonitoring.view.MainActivity;
 import com.example.kidmonitoring.model.Accounts;
 
@@ -53,6 +54,51 @@ public class AccountController {
         requestQueue.add(jsonArrayRequest);
     }
 
+    public static void updatePassword(String url, Accounts accounts, Activity context){
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.trim().equals("success")) {
+                    //Toast.makeText(context, "Sửa thông tin tài khoản thành công!!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Lỗi", Toast.LENGTH_SHORT).show();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context,"Xảy ra lỗi!"+error.toString(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("Username",accounts.getUsername());
+                params.put("Password",accounts.getPassword());
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    public static int checkChange(Accounts acc, Accounts accounts,String currentPassword, String confirmNewPassword){
+        if(accounts.getPassword().isEmpty() || currentPassword.isEmpty() || confirmNewPassword.isEmpty()  ){
+            return -2;
+        }
+        if(!currentPassword.equals(acc.getPassword())){
+            return 0;
+        }
+        if(accounts.getPassword().equals(acc.getPassword())){
+            return 1;
+        }
+        if(!accounts.getPassword().equals(confirmNewPassword)){
+            return -1;
+        }
+        return 2;
+    }
     public static int checkExist(String username, String password, ArrayList<Accounts> accountsArrayList)
     {
         for(int i=0;i<accountsArrayList.size();i++)
@@ -69,7 +115,7 @@ public class AccountController {
         return 0;
     }
 
-    public static void Register(String url, ArrayList<String> lst, Activity context, Class<MainActivity> sub)
+    public static void Register(String url, Information information,String password, Activity context, Class<MainActivity> sub)
     {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -96,30 +142,39 @@ public class AccountController {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("Email",lst.get(0));
-                params.put("HoTen",lst.get(1));
-                params.put("NgaySinh",lst.get(2));
-                params.put("GioiTinh",lst.get(3));
-                params.put("Password", lst.get(4));
+                params.put("Email",information.getEmail());
+                params.put("HoTen",information.getHoTen());
+                params.put("NgaySinh",information.getNgaySinh());
+                params.put("GioiTinh",information.getGioiTinh());
+                params.put("Password", password);
                 return params;
             }
         };
         requestQueue.add(stringRequest);
 
     }
-    public static int checkEmpty(ArrayList<String> lst, Context context){
+    public static int checkEmpty(Information information, String password, String confirm, Context context){
 
-        if(!lst.get(4).equals(lst.get(5)))
+        if(password != confirm)
         {
             Toast.makeText(context, "Vui lòng xác nhận lại mật khẩu!!!",Toast.LENGTH_SHORT).show();
             return 1;
         }
-        if(lst.get(0).isEmpty() || lst.get(1).isEmpty() || lst.get(2).isEmpty() || lst.get(4).isEmpty() || lst.get(5).isEmpty())
+        if(information.getHoTen().isEmpty() || information.getNgaySinh().isEmpty() || information.getEmail().isEmpty()
+                || information.getGioiTinh().isEmpty() || password == "")
         {
             Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin!!!", Toast.LENGTH_SHORT).show();
             return 1;
         }
         return 0;
+    }
+    public static Accounts findUser(String username, ArrayList<Accounts> accountArrayList){
+        for (Accounts i : accountArrayList){
+            if (i.getUsername().equals(username)){
+                return i;
+            }
+        }
+        return null;
     }
 
 }

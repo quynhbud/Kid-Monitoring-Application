@@ -57,7 +57,7 @@ public class LockScreenPattern extends AppCompatActivity implements PatternLockV
         setContentView(R.layout.activity_lock_screen_pattern);
         patternLockView=(PatternLockView)findViewById(R.id.pattern);
         patternLockView.addPatternLockListener(this);
-        sessionManager = new SessionManager(this);
+        sessionManager = SessionManager.getInstance(this);
         sessionManager.checkLogin();
 
         patterns=new ArrayList<>();

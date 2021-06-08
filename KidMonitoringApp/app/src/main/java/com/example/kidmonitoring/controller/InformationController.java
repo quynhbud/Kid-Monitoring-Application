@@ -60,7 +60,7 @@ public class InformationController {
         });
         requestQueue.add(jsonArrayRequest);
     }
-    public static void Update(String url, ArrayList<String> lst, Activity context)
+    public static void Update(String url, Information information, Activity context)
     {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -85,20 +85,20 @@ public class InformationController {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("Email",lst.get(0).trim());
-                params.put("HoTen",lst.get(1).trim());
-                params.put("NgaySinh",lst.get(2).trim());
-                params.put("GioiTinh",lst.get(3).trim());
+                params.put("Email",information.getEmail());
+                params.put("HoTen",information.getHoTen());
+                params.put("NgaySinh",information.getNgaySinh());
+                params.put("GioiTinh",information.getGioiTinh());
                 return params;
             }
         };
         requestQueue.add(stringRequest);
 
     }
-    public static boolean checkChange(Information user,ArrayList<String> list)
+    public static boolean checkChange(Information user,Information information)
     {
-        if( !user.getHoTen().trim().equals(list.get(1).trim()) || !user.getNgaySinh().trim().equals(list.get(2).trim())
-                || !user.getGioiTinh().trim().equals(list.get(3).trim()))
+        if( !user.getHoTen().trim().equals(information.getHoTen()) || !user.getNgaySinh().trim().equals(information.getNgaySinh())
+                || !user.getGioiTinh().trim().equals(information.getGioiTinh()))
         {
             return true;
         }

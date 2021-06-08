@@ -125,7 +125,7 @@ public class AppsManagerFragment extends Fragment{
         mDialog.setCancelable(false);
         mDialog.show();
         GetDataAppOfUser();
-        sessionManager = new SessionManager(mContext);
+        sessionManager = SessionManager.getInstance(mContext);
         sessionManager.checkLogin();
         // get user data from session
         HashMap<String, String> user = sessionManager.getUserDetails();

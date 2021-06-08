@@ -23,6 +23,11 @@
             android:title="Cài đặt mật khẩu"
             ></item>
         <item
+            android:id="@+id/nav_changePasswword"
+            android:icon="@drawable/ic_action_password"
+            android:title="Đổi mật khẩu người dùng"
+            ></item>
+        <item
             android:id="@+id/Logout"
             android:icon="@drawable/ic_action_people"
             android:title="Đăng xuất"></item>

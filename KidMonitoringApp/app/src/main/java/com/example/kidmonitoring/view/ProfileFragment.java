@@ -139,16 +139,17 @@ public class ProfileFragment extends Fragment {
         cvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                arrayList = new ArrayList<>();
-                arrayList.add(edtEmail.getText().toString().trim());
-                arrayList.add(edtFullName.getText().toString().trim());
-                arrayList.add(edtDoB.getText().toString().trim());
-                arrayList.add(gender.trim());
+                String email = edtEmail.getText().toString().trim();
+                String hoTen = edtFullName.getText().toString().trim();
+                String ngaySinh = edtDoB.getText().toString().trim();
+                String Gender = gender;
+                Information information = new Information.InformationBuilder(email).HoTen(hoTen)
+                        .NgaySinh(ngaySinh).GioiTinh(Gender).build();
 //                Toast.makeText(mContext,arrayList.toString(),Toast.LENGTH_SHORT).show();
 //                Toast.makeText(mContext, FormMainActivity.user.getEmail()+"|"+FormMainActivity.user.getHoTen()+"|"+FormMainActivity.user.getNgaySinh()+"|"+FormMainActivity.user.getGioiTinh()+"...", Toast.LENGTH_LONG).show();
-                if(InformationController.checkChange(FormMainActivity.user,arrayList)==true)
+                if(InformationController.checkChange(FormMainActivity.user,information)==true)
                 {
-                    InformationController.Update(urlUpdateInfo,arrayList,getActivity());
+                    InformationController.Update(urlUpdateInfo,information,getActivity());
                     EnableEdit(false);
                 }
                 else

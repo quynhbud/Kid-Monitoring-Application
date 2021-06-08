@@ -31,6 +31,7 @@ import com.example.kidmonitoring.controller.AccountController;
 import com.example.kidmonitoring.controller.GPSController;
 import com.example.kidmonitoring.controller.InformationController;
 import com.example.kidmonitoring.controller.SessionManager;
+import com.example.kidmonitoring.model.Accounts;
 import com.example.kidmonitoring.model.GPS;
 import com.example.kidmonitoring.model.Information;
 import com.google.android.material.navigation.NavigationView;
@@ -49,10 +50,13 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
     NavigationView navigationView;
     TextView tvUsername;
     ArrayList<Information> information;
+    ArrayList<Accounts> accounts;
     public static Information user;
+    public static Accounts acc;
     public static GPS gps;
     SessionManager sessionManager;
     String urlGetData = "https://kid-monitoring.000webhostapp.com/getdataInfor.php";
+    String urlGetDataAccount = "https://kid-monitoring.000webhostapp.com/getdata.php";
     ArrayList<GPS> lstGPS= new ArrayList<>();
     String us;
 
@@ -64,9 +68,14 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AnhXa();
+
         information=new ArrayList<>();
         InformationController.GetData(urlGetData,information,this);
-        sessionManager = new SessionManager(this);
+
+        accounts = new ArrayList<>();
+        AccountController.GetData(urlGetDataAccount,accounts,this);
+
+        sessionManager = SessionManager.getInstance(this);
         sessionManager.checkLogin();
 
         GPSController.GetData(urlGetDataGPS,lstGPS,this);
@@ -96,13 +105,11 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
                 //Intent intent = new Intent(FormMainActivity.this,ProfileActivity.class);
                 //startActivity(intent);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-
                 user=InformationController.findUser(us.trim(),information);
-
                 break;
+
             case R.id.nav_gps:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GPSFragment()).commit();
-
                 gps=GPSController.findUser(us.trim(),lstGPS);
                 user=InformationController.findUser(us.trim(),information);
 
@@ -115,10 +122,14 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
 
             case R.id.nav_appsManager:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AppsManagerFragment()).commit();
-
                 user=InformationController.findUser(us.trim(),information);
-
                 break;
+
+            case R.id.nav_changePasswword:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangePasswordFragment()).commit();
+                acc=AccountController.findUser(us.trim(),accounts);
+                break;
+
             case R.id.nav_pattern:
                 Intent intent = new Intent(this, LockScreenPattern.class);
                 this.startActivity(intent);
