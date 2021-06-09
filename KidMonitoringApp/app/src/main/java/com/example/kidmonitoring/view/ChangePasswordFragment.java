@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AccountController;
+import com.example.kidmonitoring.controller.ChangePasswordDecorator;
 import com.example.kidmonitoring.controller.SessionManager;
 import com.example.kidmonitoring.model.Accounts;
 
@@ -90,20 +91,23 @@ public class ChangePasswordFragment extends Fragment {
                 String newPassword = edtNewPassword.getText().toString().trim();
                 String confirmNewPassword = edtConfirmPassword.getText().toString().trim();
                 Accounts accounts = new Accounts.AccountsBuilder(email).Password(newPassword).Build();
-                if(AccountController.checkChange(FormMainActivity.acc,accounts,currentPassword,confirmNewPassword)==2) {
-                    AccountController.updatePassword(urlChangePassword, accounts, getActivity());
-                    Toast.makeText(mContext, "Đã đổi mật khẩu. Vui lòng đăng nhập lại!!!", Toast.LENGTH_SHORT).show();
+                AccountController accountController = AccountController.getInstance();
+                ChangePasswordDecorator changePasswordDecorator = new ChangePasswordDecorator(accountController);
+
+                if(changePasswordDecorator.checkChange(FormMainActivity.acc,accounts,currentPassword,confirmNewPassword)==2) {
+                    changePasswordDecorator.updatePassword(urlChangePassword, accounts, getActivity());
                     sessionManager.logoutUser();
                     startActivity(new Intent(getActivity(),MainActivity.class));
                     getActivity().finish();
+                    Toast.makeText(mContext, "Đã đổi mật khẩu. Vui lòng đăng nhập lại!!!", Toast.LENGTH_SHORT).show();
                 }
-                else if(AccountController.checkChange(FormMainActivity.acc,accounts,currentPassword,confirmNewPassword)==-2){
+                else if(ChangePasswordDecorator.checkChange(FormMainActivity.acc,accounts,currentPassword,confirmNewPassword)==-2){
                     Toast.makeText(mContext, "Vui lòng nhập đầy đủ thông tin!!!", Toast.LENGTH_SHORT).show();
                 }
-                else if(AccountController.checkChange(FormMainActivity.acc,accounts,currentPassword,confirmNewPassword)==1) {
+                else if(ChangePasswordDecorator.checkChange(FormMainActivity.acc,accounts,currentPassword,confirmNewPassword)==1) {
                     Toast.makeText(mContext, "Mật khẩu mới trùng mật khẩu hiện tại!!!", Toast.LENGTH_SHORT).show();
                 }
-                else if(AccountController.checkChange(FormMainActivity.acc,accounts,currentPassword,confirmNewPassword)==0){
+                else if(ChangePasswordDecorator.checkChange(FormMainActivity.acc,accounts,currentPassword,confirmNewPassword)==0){
                     Toast.makeText(mContext, "Mật khẩu hiện tại không đúng!!!", Toast.LENGTH_SHORT).show();
                 }
                 else

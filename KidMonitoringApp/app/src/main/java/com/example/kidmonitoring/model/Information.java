@@ -12,6 +12,7 @@ public class Information {
         this.NgaySinh = ngaySinh;
         this.GioiTinh = gioiTinh;
     }
+
     public String getEmail() {
         return Email;
     }
@@ -33,10 +34,10 @@ public class Information {
         private String HoTen;
         private String NgaySinh;
         private String GioiTinh;
-
         public InformationBuilder(String email) {
             this.Email = email;
         }
+
 
         public InformationBuilder HoTen(String hoTen) {
             this.HoTen = hoTen;

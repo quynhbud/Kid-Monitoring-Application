@@ -41,7 +41,7 @@ public class CurrentRunningApp extends AccessibilityService {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        sessionManager = new SessionManager(this);
+        sessionManager = SessionManager.getInstance(this);
         sessionManager.checkLogin();
         // get user data from session
         HashMap<String, String> user = sessionManager.getUserDetails();

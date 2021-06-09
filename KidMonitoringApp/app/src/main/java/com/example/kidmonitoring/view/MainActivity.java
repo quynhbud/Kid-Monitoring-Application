@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        accounts=new ArrayList<>();
-        AccountController.GetData(urlGetData,accounts,this);
+
+        AccountController accountController = AccountController.getInstance();
+        accountController.GetData(urlGetData,this);
         AnhXa();
         //sessionManager = new SessionManager(this);
         sessionManager = SessionManager.getInstance(this);
@@ -41,14 +42,13 @@ public class MainActivity extends AppCompatActivity  {
         cvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String username = usn.getText().toString().trim();
                 String password = psw.getText().toString().trim();
-                if(AccountController.checkExist(username,password,accounts)==1)
+                if(accountController.checkExist(username,password)==1)
                 {
                     Toast.makeText(MainActivity.this, "Nhập sai mật khẩu!", Toast.LENGTH_SHORT).show();
                 }
-                else if(AccountController.checkExist(username,password,accounts)==2)
+                else if(accountController.checkExist(username,password)==2)
                 {
                     Toast.makeText(MainActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                     Email = username;

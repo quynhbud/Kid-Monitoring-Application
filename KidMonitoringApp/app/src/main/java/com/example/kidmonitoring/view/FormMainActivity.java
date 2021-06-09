@@ -50,7 +50,6 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
     NavigationView navigationView;
     TextView tvUsername;
     ArrayList<Information> information;
-    ArrayList<Accounts> accounts;
     public static Information user;
     public static Accounts acc;
     public static GPS gps;
@@ -72,8 +71,9 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
         information=new ArrayList<>();
         InformationController.GetData(urlGetData,information,this);
 
-        accounts = new ArrayList<>();
-        AccountController.GetData(urlGetDataAccount,accounts,this);
+
+        AccountController accountController = AccountController.getInstance();
+        AccountController.GetData(urlGetDataAccount,this);
 
         sessionManager = SessionManager.getInstance(this);
         sessionManager.checkLogin();
@@ -127,7 +127,7 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
 
             case R.id.nav_changePasswword:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangePasswordFragment()).commit();
-                acc=AccountController.findUser(us.trim(),accounts);
+                acc=AccountController.findUser(us.trim());
                 break;
 
             case R.id.nav_pattern:

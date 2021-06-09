@@ -52,7 +52,7 @@ public class GPSService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        sessionManager = new SessionManager(this);
+        sessionManager = SessionManager.getInstance(this);
         sessionManager.checkLogin();
         // get user data from session
         HashMap<String, String> user = sessionManager.getUserDetails();

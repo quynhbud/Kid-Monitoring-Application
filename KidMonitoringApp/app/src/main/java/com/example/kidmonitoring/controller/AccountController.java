@@ -1,5 +1,6 @@
 package com.example.kidmonitoring.controller;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,13 +26,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AccountController {
-    public static void GetData(String url, ArrayList<Accounts> accounts, Context context)
+public class AccountController implements IAccountController{
+    static ArrayList<Accounts> accounts;
+    private static AccountController accountController;
+    public static AccountController getInstance(){
+        if(accountController ==null){
+            accountController = new AccountController();
+        }
+        return  accountController;
+    }
+    public AccountController() {
+        this.accounts = new ArrayList<>();
+    }
+
+    public static void GetData(String url, Context context)
     {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                accounts.clear();
                 for(int i = 0; i<response.length(); i++)
                     try {
                         JSONObject object = response.getJSONObject(i);
@@ -54,58 +68,13 @@ public class AccountController {
         requestQueue.add(jsonArrayRequest);
     }
 
-    public static void updatePassword(String url, Accounts accounts, Activity context){
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (response.trim().equals("success")) {
-                    //Toast.makeText(context, "Sửa thông tin tài khoản thành công!!!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Lỗi", Toast.LENGTH_SHORT).show();
-                }
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context,"Xảy ra lỗi!"+error.toString(),Toast.LENGTH_SHORT).show();
-                    }
-                }
-        ){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("Username",accounts.getUsername());
-                params.put("Password",accounts.getPassword());
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
-
-    public static int checkChange(Accounts acc, Accounts accounts,String currentPassword, String confirmNewPassword){
-        if(accounts.getPassword().isEmpty() || currentPassword.isEmpty() || confirmNewPassword.isEmpty()  ){
-            return -2;
-        }
-        if(!currentPassword.equals(acc.getPassword())){
-            return 0;
-        }
-        if(accounts.getPassword().equals(acc.getPassword())){
-            return 1;
-        }
-        if(!accounts.getPassword().equals(confirmNewPassword)){
-            return -1;
-        }
-        return 2;
-    }
-    public static int checkExist(String username, String password, ArrayList<Accounts> accountsArrayList)
+    public static int checkExist(String username, String password)
     {
-        for(int i=0;i<accountsArrayList.size();i++)
+        for(int i=0;i<accounts.size();i++)
         {
-            if(accountsArrayList.get(i).getUsername().equals(username))
+            if(accounts.get(i).getUsername().equals(username))
             {
-                if(accountsArrayList.get(i).getPassword().equals(password))
+                if(accounts.get(i).getPassword().equals(password))
                     return 2;
                 else
                     return 1;
@@ -168,13 +137,12 @@ public class AccountController {
         }
         return 0;
     }
-    public static Accounts findUser(String username, ArrayList<Accounts> accountArrayList){
-        for (Accounts i : accountArrayList){
+    public static Accounts findUser(String username){
+        for (Accounts i : accounts){
             if (i.getUsername().equals(username)){
                 return i;
             }
         }
         return null;
     }
-
 }
