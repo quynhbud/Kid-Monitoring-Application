@@ -13,7 +13,8 @@ import androidx.cardview.widget.CardView;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AccountController;
 import com.example.kidmonitoring.controller.AppController;
-import com.example.kidmonitoring.model.Information;
+import com.example.kidmonitoring.model.Information.Information;
+import com.example.kidmonitoring.model.Information.InformationConcreteBuilder;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     String gender = "Nam";
     CardView cvRegister;
     String urlInsert;
+    Information information;
     ArrayList<String> infoRegister = new ArrayList<>();
 
 
@@ -53,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String Gender = gender;
                 String password = edtPassword.getText().toString().trim();
                 String confirm = edtConfirm.getText().toString().trim();
-                Information information = new Information.InformationBuilder(email).HoTen(hoTen)
+                information =  new InformationConcreteBuilder().Email(email).HoTen(hoTen)
                         .NgaySinh(ngaySinh).GioiTinh(Gender).build();
                 if(AccountController.checkEmpty(information,password,confirm,RegisterActivity.this)==0)
                 {

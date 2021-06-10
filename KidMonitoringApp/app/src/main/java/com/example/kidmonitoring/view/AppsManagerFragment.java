@@ -1,16 +1,8 @@
 package com.example.kidmonitoring.view;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +24,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.adapter.AppAdapter;
-import com.example.kidmonitoring.controller.AppController;
-import com.example.kidmonitoring.controller.InformationController;
 import com.example.kidmonitoring.controller.SessionManager;
 import com.example.kidmonitoring.model.Application;
 
@@ -41,12 +31,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -12,10 +12,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kidmonitoring.model.GPS;
-import com.example.kidmonitoring.model.Information;
-import com.example.kidmonitoring.view.FormChildrenActivity;
-import com.example.kidmonitoring.view.FormMainActivity;
-import com.example.kidmonitoring.view.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

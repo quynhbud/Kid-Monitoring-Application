@@ -1,31 +1,17 @@
 package com.example.kidmonitoring.view;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.provider.ContactsContract;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AccountController;
 import com.example.kidmonitoring.controller.GPSController;
@@ -33,12 +19,8 @@ import com.example.kidmonitoring.controller.InformationController;
 import com.example.kidmonitoring.controller.SessionManager;
 import com.example.kidmonitoring.model.Accounts;
 import com.example.kidmonitoring.model.GPS;
-import com.example.kidmonitoring.model.Information;
+import com.example.kidmonitoring.model.Information.Information;
 import com.google.android.material.navigation.NavigationView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +31,7 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
     Toolbar toolbar;
     NavigationView navigationView;
     TextView tvUsername;
-    ArrayList<Information> information;
+    static ArrayList<Information> information;
     public static Information user;
     public static Accounts acc;
     public static GPS gps;
@@ -80,10 +62,11 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
 
         GPSController.GetData(urlGetDataGPS,lstGPS,this);
         // get user data from session
-        HashMap<String, String> user = sessionManager.getUserDetails();
+        HashMap<String, String> User = sessionManager.getUserDetails();
 
         // name
-        us = user.get(SessionManager.KEY_USERNAME);
+        us = User.get(SessionManager.KEY_USERNAME);
+
         ActionToolBar();
 
 
@@ -102,8 +85,6 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_profile:
-                //Intent intent = new Intent(FormMainActivity.this,ProfileActivity.class);
-                //startActivity(intent);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
                 user=InformationController.findUser(us.trim(),information);
                 break;

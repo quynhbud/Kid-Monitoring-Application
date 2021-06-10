@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.example.kidmonitoring.model.Accounts;
-import com.example.kidmonitoring.model.Information;
+import com.example.kidmonitoring.model.Information.Information;
 import com.example.kidmonitoring.view.MainActivity;
 
 import java.util.ArrayList;

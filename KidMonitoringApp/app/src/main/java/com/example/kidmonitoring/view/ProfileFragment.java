@@ -1,6 +1,5 @@
 package com.example.kidmonitoring.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -20,7 +19,8 @@ import android.widget.Toast;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AppController;
 import com.example.kidmonitoring.controller.InformationController;
-import com.example.kidmonitoring.model.Information;
+import com.example.kidmonitoring.model.Information.Information;
+import com.example.kidmonitoring.model.Information.InformationConcreteBuilder;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class ProfileFragment extends Fragment {
     CardView cvEdit,cvSave;
     ArrayList<String> arrayList;
     String urlUpdateInfo = "https://kid-monitoring.000webhostapp.com/updateDataInfor.php";
-
+    String urlGetData = "https://kid-monitoring.000webhostapp.com/getdataInfor.php";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,11 +85,6 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
-
-
     }
 
     @Override
@@ -143,13 +138,16 @@ public class ProfileFragment extends Fragment {
                 String hoTen = edtFullName.getText().toString().trim();
                 String ngaySinh = edtDoB.getText().toString().trim();
                 String Gender = gender;
-                Information information = new Information.InformationBuilder(email).HoTen(hoTen)
-                        .NgaySinh(ngaySinh).GioiTinh(Gender).build();
+                Information information = new InformationConcreteBuilder().Email(email).HoTen(hoTen)
+                                                        .NgaySinh(ngaySinh).GioiTinh(Gender).build();
 //                Toast.makeText(mContext,arrayList.toString(),Toast.LENGTH_SHORT).show();
 //                Toast.makeText(mContext, FormMainActivity.user.getEmail()+"|"+FormMainActivity.user.getHoTen()+"|"+FormMainActivity.user.getNgaySinh()+"|"+FormMainActivity.user.getGioiTinh()+"...", Toast.LENGTH_LONG).show();
                 if(InformationController.checkChange(FormMainActivity.user,information)==true)
                 {
                     InformationController.Update(urlUpdateInfo,information,getActivity());
+                    FormMainActivity.information=new ArrayList<>();
+                    InformationController.GetData(urlGetData,FormMainActivity.information,mContext);
+                    FormMainActivity.user = InformationController.findUser(FormMainActivity.user.getEmail(),FormMainActivity.information);
                     EnableEdit(false);
                 }
                 else

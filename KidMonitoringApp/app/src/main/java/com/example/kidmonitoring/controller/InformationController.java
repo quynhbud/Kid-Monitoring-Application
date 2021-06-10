@@ -2,11 +2,7 @@ package com.example.kidmonitoring.controller;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
-
-import androidx.cardview.widget.CardView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -16,10 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.kidmonitoring.model.Accounts;
-import com.example.kidmonitoring.model.Information;
-import com.example.kidmonitoring.view.MainActivity;
-import com.example.kidmonitoring.view.ProfileFragment;
+import com.example.kidmonitoring.model.Information.Information;
 
 import org.json.JSONArray;
 import org.json.JSONException;

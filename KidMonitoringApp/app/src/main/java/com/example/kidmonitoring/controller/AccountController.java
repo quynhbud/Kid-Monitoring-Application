@@ -1,6 +1,5 @@
 package com.example.kidmonitoring.controller;
 
-import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.kidmonitoring.model.Information;
+import com.example.kidmonitoring.model.Information.Information;
 import com.example.kidmonitoring.view.MainActivity;
 import com.example.kidmonitoring.model.Accounts;
 
