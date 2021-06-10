@@ -89,14 +89,14 @@ public class FormChildrenActivity extends AppCompatActivity{
 
         // name
         us = user.get(SessionManager.KEY_USERNAME);
-//        AppController.Delete(urlDeleteData,us,this);
-//
-//        for(int i=0; i<applications.size();i++)
-//        {
-//            AppController.Insert(urlInsertData,applications.get(i),us,this);
-//            if(i==applications.size()-1)
-//                Toast.makeText(FormChildrenActivity.this, "Done", Toast.LENGTH_SHORT).show();
-//        }
+        AppController.Delete(urlDeleteData,us,this);
+
+        for(int i=0; i<applications.size();i++)
+        {
+            AppController.Insert(urlInsertData,applications.get(i),us,this);
+            if(i==applications.size()-1)
+                Toast.makeText(FormChildrenActivity.this, "Done", Toast.LENGTH_SHORT).show();
+        }
         GetDataAppOfUser();
 
 

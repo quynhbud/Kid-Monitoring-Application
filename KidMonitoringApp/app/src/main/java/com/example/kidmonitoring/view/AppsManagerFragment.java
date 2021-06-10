@@ -124,7 +124,7 @@ public class AppsManagerFragment extends Fragment{
         mDialog.setMessage("Loading...");
         mDialog.setCancelable(false);
         mDialog.show();
-        GetDataAppOfUser();
+
         sessionManager = SessionManager.getInstance(mContext);
         sessionManager.checkLogin();
         // get user data from session
@@ -137,6 +137,7 @@ public class AppsManagerFragment extends Fragment{
         adapter = new AppAdapter(mContext,R.layout.dong_app,apps);
         lvapp.setAdapter(adapter);
 
+        GetData(urlGetData);
         applications=apps;
         lvapp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -153,21 +154,6 @@ public class AppsManagerFragment extends Fragment{
             }
         });
         return dashboardInflatedView;
-    }
-    private void GetDataAppOfUser()
-    {
-        GetData(urlGetData);
-        for(int i=0;i<apps.size();i++)
-        {
-            if(apps.get(i).getmEmail().trim().equals(MainActivity.Email))
-            {
-                continue;
-            }
-            else {
-                apps.remove(i);
-                i--;
-            }
-        }
     }
     private void GetData(String url)
     {
@@ -189,13 +175,14 @@ public class AppsManagerFragment extends Fragment{
                         else
                             check=false;
                             //Toast.makeText(mContext, object.getString("TenUngDung"), Toast.LENGTH_SHORT).show();
+                        if(object.getString("Email").equals(us)){
                         apps.add(new Application(
                                 object.getString("Email"),
                                 object.getString("TenUngDung"),
                                 object.getString("MoTa"),
                                 bytes,
                                 check
-                        ));
+                        ));}
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
