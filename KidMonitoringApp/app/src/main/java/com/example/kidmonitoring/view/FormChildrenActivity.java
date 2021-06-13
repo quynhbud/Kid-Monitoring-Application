@@ -67,7 +67,7 @@ public class FormChildrenActivity extends AppCompatActivity{
     String urlDeleteData="https://kid-monitoring.000webhostapp.com/deleteDataApps.php";
     public static ArrayList<String> packages = new ArrayList<>();
     ArrayList<Application> applications,apps;
-    CardView cvLogout,cvAccess;
+    CardView cvLogout,cvAccess,cvGetApp;
     SessionManager sessionManager;
     double latitude,longitude;
     String myAddress = "";
@@ -89,16 +89,8 @@ public class FormChildrenActivity extends AppCompatActivity{
 
         // name
         us = user.get(SessionManager.KEY_USERNAME);
-        AppController.Delete(urlDeleteData,us,this);
 
-        for(int i=0; i<applications.size();i++)
-        {
-            AppController.Insert(urlInsertData,applications.get(i),us,this);
-            if(i==applications.size()-1)
-                Toast.makeText(FormChildrenActivity.this, "Done", Toast.LENGTH_SHORT).show();
-        }
         GetDataAppOfUser();
-
 
         GPSLocator gpsLocator = new GPSLocator(getApplicationContext());
         Location location = gpsLocator.GetLocation();
@@ -121,24 +113,21 @@ public class FormChildrenActivity extends AppCompatActivity{
         }
         //GPSController.Delete(urlDeleteDataGPS,us,this);
         //GPSController.InsertGPS(urlInsertDataGPS,new GPS(us,myAddress,latitude,longitude),this);
-//        Intent myIntent = new Intent(this, GPSService.class);
-//        this.startService(myIntent);
+        Intent myIntent = new Intent(this, GPSService.class);
+        this.startService(myIntent);
         cvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
                 sessionManager.logoutUser();
                 startActivity(new Intent(FormChildrenActivity.this,MainActivity.class));
-                //FormChildrenActivity.this.stopService(myIntent);
+                FormChildrenActivity.this.stopService(myIntent);
                 finish();
             }
         });
         cvAccess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                packages.clear();
                 for(int i=0;i<apps.size();i++) {
                     if(apps.get(i).isChecked()==true)
                     {
@@ -147,6 +136,19 @@ public class FormChildrenActivity extends AppCompatActivity{
                 }
                 alertDi("Yêu cầu bật trợ năng", "Yêu cầu quyền quản lý cho ứng dụng", Settings.ACTION_ACCESSIBILITY_SETTINGS);
 
+            }
+        });
+        cvGetApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppController.Delete(urlDeleteData,us,FormChildrenActivity.this);
+
+                for(int i=0; i<applications.size();i++)
+                {
+                    AppController.Insert(urlInsertData,applications.get(i),us,FormChildrenActivity.this);
+                    if(i==applications.size()-1)
+                        Toast.makeText(FormChildrenActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -168,6 +170,7 @@ public class FormChildrenActivity extends AppCompatActivity{
     private void AnhXa() {
         cvLogout = (CardView)findViewById(R.id.cardViewLogout);
         cvAccess = (CardView)findViewById(R.id.cardViewAccessService);
+        cvGetApp = (CardView)findViewById(R.id.cardViewGetApp);
     }
     private void GetData(String url)
     {

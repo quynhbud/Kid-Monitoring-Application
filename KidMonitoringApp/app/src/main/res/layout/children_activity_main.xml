@@ -35,13 +35,38 @@
                 android:src="@drawable/kid">
 
             </ImageView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewGetApp"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="150dp"
 
+                app:cardBackgroundColor="#FFF"
+                app:cardCornerRadius="25dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/custom_button">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="LẤY DANH SÁCH APPS"
+                        android:textColor="#03A9F4"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewAccessService"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="220dp"
 
                 app:cardBackgroundColor="#FFF"
                 app:cardCornerRadius="25dp">
@@ -67,7 +92,7 @@
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="220dp"
+                android:layout_marginTop="290dp"
 
                 app:cardBackgroundColor="#FFF"
                 app:cardCornerRadius="25dp">

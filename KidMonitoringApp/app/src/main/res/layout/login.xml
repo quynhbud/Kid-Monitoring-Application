@@ -47,6 +47,7 @@
         android:inputType="textPassword"
         android:textColor="#fff"
         android:textSize="16sp" />
+
     <TextView
         android:id="@+id/textForgotPassword"
         android:layout_width="wrap_content"
@@ -54,8 +55,7 @@
         android:layout_below="@+id/editTextPasswordLogin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:textColor="#fff"
-        android:text="Quên mật khẩu?" />
+        android:textColor="#fff" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewLogin"

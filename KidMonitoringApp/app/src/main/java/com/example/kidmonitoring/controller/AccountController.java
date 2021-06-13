@@ -123,15 +123,16 @@ public class AccountController implements IAccountController{
     }
     public static int checkEmpty(Information information, String password, String confirm, Context context){
 
-        if(password != confirm)
-        {
-            Toast.makeText(context, "Vui lòng xác nhận lại mật khẩu!!!",Toast.LENGTH_SHORT).show();
-            return 1;
-        }
+
         if(information.getHoTen().isEmpty() || information.getNgaySinh().isEmpty() || information.getEmail().isEmpty()
                 || information.getGioiTinh().isEmpty() || password == "")
         {
             Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin!!!", Toast.LENGTH_SHORT).show();
+            return 1;
+        }
+        if(!password.equals(confirm))
+        {
+            Toast.makeText(context, "Vui lòng xác nhận lại mật khẩu!!!",Toast.LENGTH_SHORT).show();
             return 1;
         }
         return 0;

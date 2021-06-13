@@ -71,6 +71,7 @@ public class LockScreenPattern extends AppCompatActivity implements PatternLockV
         //Toast.makeText(this, us, Toast.LENGTH_SHORT).show();
         AnhXa();
         GetData(urlGetdata);
+        GetPattern();
         //tv_notification.setText("Please draw your pattern to set password");
         tv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +110,7 @@ public class LockScreenPattern extends AppCompatActivity implements PatternLockV
     @Override
     public void onComplete(List<PatternLockView.Dot> pattern) {
         GetPattern();
+        Toast.makeText(this, patternpass, Toast.LENGTH_SHORT).show();
         if(isSetPassword==true) {
             if (pass == "") {
 
@@ -139,6 +141,7 @@ public class LockScreenPattern extends AppCompatActivity implements PatternLockV
         }
         else{
             String tmp=CurrentRunningApp.runningPackName;
+            //Toast.makeText(this, tmp+"/"+FormChildrenActivity.packages.size(), Toast.LENGTH_SHORT).show();
             tv_notification.setText("Please draw your pattern");
             if (PatternLockUtils.patternToString(patternLockView, pattern).equalsIgnoreCase(patternpass)) {
                 patternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
