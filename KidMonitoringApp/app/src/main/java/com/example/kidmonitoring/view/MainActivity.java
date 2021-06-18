@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity  {
                     startActivity(new Intent(MainActivity.this,RolesActivity.class));
                     finish();
                 }
+                else  if(accountController.checkExist(username,password)==1)
+                {
+                    Toast.makeText(MainActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                }
                 else {
                     Toast.makeText(MainActivity.this, "Tài khoản không tồn tại!", Toast.LENGTH_SHORT).show();
 

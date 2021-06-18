@@ -69,18 +69,19 @@ public class AccountController implements IAccountController{
 
     public static int checkExist(String username, String password)
     {
-        for(int i=0;i<accounts.size();i++)
-        {
-            if(accounts.get(i).getUsername().equals(username))
-            {
-                if(accounts.get(i).getPassword().equals(password))
-                    return 2;
-                else
-                    return 1;
+        if(username.isEmpty() || password.isEmpty())
+            return -1;
+        else {
+            for (int i = 0; i < accounts.size(); i++) {
+                if (accounts.get(i).getUsername().equals(username)) {
+                    if (accounts.get(i).getPassword().equals(password))
+                        return 2;
+                    else
+                        return 1;
+                }
             }
-
+            return 0;
         }
-        return 0;
     }
 
     public static void Register(String url, Information information,String password, Activity context, Class<MainActivity> sub)
