@@ -1,6 +1,7 @@
 package com.example.kidmonitoring.view;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
@@ -14,8 +15,13 @@ import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
+import android.text.Editable;
 import android.util.Base64;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -72,13 +78,16 @@ public class FormChildrenActivity extends AppCompatActivity{
     double latitude,longitude;
     String myAddress = "";
     List<Address> addresses;
-    String us;
+    String us,ps;
+    boolean isLogout;
+    Intent myIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.children_activity_main);
         AnhXa();
+        isLogout =false;
         sessionManager = SessionManager.getInstance(this);
         applications = new ArrayList<>();
         apps=new ArrayList<>();
@@ -89,6 +98,7 @@ public class FormChildrenActivity extends AppCompatActivity{
 
         // name
         us = user.get(SessionManager.KEY_USERNAME);
+        ps = user.get(SessionManager.KEY_PASSWORD);
 
         GetDataAppOfUser();
 
@@ -113,16 +123,13 @@ public class FormChildrenActivity extends AppCompatActivity{
         }
         //GPSController.Delete(urlDeleteDataGPS,us,this);
         //GPSController.InsertGPS(urlInsertDataGPS,new GPS(us,myAddress,latitude,longitude),this);
-        Intent myIntent = new Intent(this, GPSService.class);
+        myIntent = new Intent(this, GPSService.class);
         this.startService(myIntent);
         cvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sessionManager.logoutUser();
-                startActivity(new Intent(FormChildrenActivity.this,MainActivity.class));
-                FormChildrenActivity.this.stopService(myIntent);
-                finish();
-            }
+                Dialog_ConfirmPass();
+                }
         });
         cvAccess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,4 +297,33 @@ public class FormChildrenActivity extends AppCompatActivity{
         alertDialog.show();
     }
 
+    private void Dialog_ConfirmPass()
+    {
+        Dialog dialog =new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirmpassword);
+        dialog.setCanceledOnTouchOutside(false);
+        EditText edtEmail=(EditText)dialog.findViewById(R.id.edtEmail);
+        EditText edtConfirm=(EditText)dialog.findViewById(R.id.edtConfirmPass);
+        CardView cvConfirm=(CardView) dialog.findViewById(R.id.cardViewConfirmPass);
+        edtEmail.setText(us);
+        cvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pass = edtConfirm.getText().toString().trim();
+                if(ps.equals(pass))
+                {
+                    sessionManager.logoutUser();
+                    startActivity(new Intent(FormChildrenActivity.this, MainActivity.class));
+                    FormChildrenActivity.this.stopService(myIntent);
+                    finish();
+                    dialog.dismiss();
+                }
+                else {
+                    Toast.makeText(FormChildrenActivity.this, "Sai mật khẩu", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        dialog.show();
+    }
 }
