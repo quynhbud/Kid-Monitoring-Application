@@ -110,7 +110,7 @@ public class LockScreenPattern extends AppCompatActivity implements PatternLockV
     @Override
     public void onComplete(List<PatternLockView.Dot> pattern) {
         GetPattern();
-        Toast.makeText(this, patternpass, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, patternpass, Toast.LENGTH_SHORT).show();
         if(isSetPassword==true) {
             if (pass == "") {
 
@@ -155,6 +155,7 @@ public class LockScreenPattern extends AppCompatActivity implements PatternLockV
             } else {
 
                 patternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                patternLockView.clearPattern();
                 Toast.makeText(this, "Not Correct", Toast.LENGTH_SHORT).show();
             }
         }

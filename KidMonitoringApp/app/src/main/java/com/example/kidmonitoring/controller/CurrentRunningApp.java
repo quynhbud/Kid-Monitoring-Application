@@ -49,13 +49,14 @@ public class CurrentRunningApp extends AccessibilityService {
         // name
         us = user.get(SessionManager.KEY_USERNAME);
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        runningPackName = event.getPackageName().toString();
-//        if (runningPackName.contains("me.mycake")) {
+        String runningPackageName = event.getPackageName().toString();
+//        if (runningPackageName.contains("me.mycake")) {
 //            blockApp();
 //        }
         for(String pack : FormChildrenActivity.packages)
         {
-            if (runningPackName.contains(pack)) {
+            if (runningPackageName.contains(pack)) {
+                runningPackName=pack;
                 blockApp();
             }
         }

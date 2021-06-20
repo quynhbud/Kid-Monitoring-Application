@@ -141,6 +141,7 @@ public class FormChildrenActivity extends AppCompatActivity{
                         packages.add(apps.get(i).getmPackage());
                     }
                 }
+
                 alertDi("Yêu cầu bật trợ năng", "Yêu cầu quyền quản lý cho ứng dụng", Settings.ACTION_ACCESSIBILITY_SETTINGS);
 
             }

@@ -53,6 +53,7 @@ public class FormMainActivity extends AppCompatActivity implements NavigationVie
         information=new ArrayList<>();
         InformationController.GetData(urlGetData,information,this);
 
+        FormChildrenActivity.packages.clear();
 
         AccountController accountController = AccountController.getInstance();
         AccountController.GetData(urlGetDataAccount,this);
