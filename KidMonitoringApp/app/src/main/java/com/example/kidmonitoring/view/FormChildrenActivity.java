@@ -1,5 +1,6 @@
 package com.example.kidmonitoring.view;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;
@@ -348,5 +349,18 @@ public class FormChildrenActivity extends AppCompatActivity{
             }
         });
         dialog.show();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RESULT_ENABLE:
+                if (resultCode == Activity.RESULT_OK) {
+                    Toast.makeText(this, "You have enabled the Admin Device Features", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(this, "Problem to enable the Admin Device Features", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
     }
 }
