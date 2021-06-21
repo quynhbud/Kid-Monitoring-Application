@@ -2,6 +2,8 @@ package com.example.kidmonitoring.view;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
@@ -38,6 +40,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.kidmonitoring.R;
 import com.example.kidmonitoring.controller.AppController;
+import com.example.kidmonitoring.controller.ApplicationService;
 import com.example.kidmonitoring.controller.CurrentRunningApp;
 import com.example.kidmonitoring.controller.GPSController;
 import com.example.kidmonitoring.controller.GPSLocator;
@@ -73,7 +76,7 @@ public class FormChildrenActivity extends AppCompatActivity{
     String urlDeleteData="https://kid-monitoring.000webhostapp.com/deleteDataApps.php";
     public static ArrayList<String> packages = new ArrayList<>();
     ArrayList<Application> applications,apps;
-    CardView cvLogout,cvAccess,cvGetApp;
+    CardView cvLogout,cvAccess,cvAdminreceiver,cvGetApp;
     SessionManager sessionManager;
     double latitude,longitude;
     String myAddress = "";
@@ -81,6 +84,9 @@ public class FormChildrenActivity extends AppCompatActivity{
     String us,ps;
     boolean isLogout;
     Intent myIntent;
+    private ComponentName componentName;
+    public static final int RESULT_ENABLE = 11;
+    private DevicePolicyManager devicePolicyManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -146,6 +152,19 @@ public class FormChildrenActivity extends AppCompatActivity{
 
             }
         });
+        cvAdminreceiver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                componentName = new ComponentName(FormChildrenActivity.this, ApplicationService.MyAdmin.class);
+                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+                intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Additional text explaining why we need this permission");
+                startActivityForResult(intent, RESULT_ENABLE);
+
+                // disable.setVisibility(View.VISIBLE);
+                // enable.setVisibility(View.GONE);
+            }
+        });
         cvGetApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,6 +197,7 @@ public class FormChildrenActivity extends AppCompatActivity{
     private void AnhXa() {
         cvLogout = (CardView)findViewById(R.id.cardViewLogout);
         cvAccess = (CardView)findViewById(R.id.cardViewAccessService);
+        cvAdminreceiver=(CardView) findViewById(R.id.cardViewAdminReceiver);
         cvGetApp = (CardView)findViewById(R.id.cardViewGetApp);
     }
     private void GetData(String url)
@@ -314,6 +334,8 @@ public class FormChildrenActivity extends AppCompatActivity{
                 String pass = edtConfirm.getText().toString().trim();
                 if(ps.equals(pass))
                 {
+                    devicePolicyManager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
+                    devicePolicyManager.removeActiveAdmin(componentName);
                     sessionManager.logoutUser();
                     startActivity(new Intent(FormChildrenActivity.this, MainActivity.class));
                     FormChildrenActivity.this.stopService(myIntent);

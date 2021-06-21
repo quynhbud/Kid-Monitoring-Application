@@ -88,11 +88,37 @@
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewLogout"
+                android:id="@+id/cardViewAdminReceiver"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="290dp"
+
+                app:cardBackgroundColor="#FFF"
+                app:cardCornerRadius="25dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/custom_button">
+
+                    <TextView
+                        android:id="@+id/textViewAdmin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Kích hoạt quyền Admin"
+                        android:textColor="#03A9F4"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewLogout"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="360dp"
 
                 app:cardBackgroundColor="#FFF"
                 app:cardCornerRadius="25dp">
